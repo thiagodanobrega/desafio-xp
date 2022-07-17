@@ -12,9 +12,9 @@ export interface ISignInData {
 }
 
 export interface IAuthContext {
-  isAuthenticated: boolean;
-  user: IUser;
-  signIn: (data: ISignInData) => Promise<void>;
+  user: IUser | null;
+  signIn: (data: ISignInData) => Promise<boolean>;
+  signout: () => void;
 }
 
 export const AuthContext = createContext({} as IAuthContext);
