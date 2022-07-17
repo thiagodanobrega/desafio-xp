@@ -1,5 +1,8 @@
+import { CircleNotch } from "phosphor-react";
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Button } from "../Button";
 import Input from "../Input";
 import { FormLoginWrapper } from "./style";
@@ -7,6 +10,10 @@ import { FormLoginWrapper } from "./style";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
+
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const validateInputsLogin = () => {
     const regexEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/i;
@@ -33,8 +40,20 @@ function LoginForm() {
     validateInputsLogin();
   };
 
+  const handleSigIn = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoadingLogin(true);
+    const isAuthenticated = await auth.signIn({ email, password });
+    if (isAuthenticated) {
+      setIsLoadingLogin(false);
+      navigate("/home");
+    } else {
+      setIsLoadingLogin(false);
+    }
+  };
+
   return (
-    <FormLoginWrapper>
+    <FormLoginWrapper onSubmit={handleSigIn}>
       <Input type="email" placeholder="Email" funcEvent={handleEmailInput} />
 
       <Input
