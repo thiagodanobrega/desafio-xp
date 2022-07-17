@@ -10,6 +10,6 @@ export default createGlobalStyle`
     background: #1F1F1F;
     font-size: 16px;
     color: white;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Roboto', sans-serif;
   }
 `;
