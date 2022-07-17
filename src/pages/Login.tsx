@@ -10,7 +10,7 @@ function Login() {
           <img
             className="mx-auto h-16 w-auto"
             src="images/logo-xpi.svg"
-            alt="Logo da XP investimentos"
+            alt="Logo da Xp investimentos"
           />
           <h1 className="mt-6 text-center text-3xl font-extrabold">
             Faça login em sua conta
