@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 
 import { Button } from "../Button";
 import Input from "../Input";
 import { FormLoginWrapper } from "./style";
 
 function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailInput = (event: { target: HTMLInputElement }) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordInput = (event: { target: HTMLInputElement }) => {
+    setPassword(event.target.value);
+  };
+
   return (
-    <FormLoginWrapper className="bg-primary mt-8 flex flex-col gap-4 rounded-lg shadow-sm p-10 sm:p-16">
-      <Input type="email" placeholder="Email" />
-      <Input type="password" placeholder="Senha" />
-      <Button type="submit">ENTRAR</Button>
+    <FormLoginWrapper>
+      <Input type="email" placeholder="Email" funcEvent={handleEmailInput} />
+
+      <Input
+        type="password"
+        placeholder="Senha"
+        funcEvent={handlePasswordInput}
+      />
+
+      <Button type="submit">
+        <p>ENTRAR</p>
+      </Button>
     </FormLoginWrapper>
   );
 }
