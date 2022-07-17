@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { useApi } from "../../services/auth";
 import { AuthContext, ISignInData, IUser } from "./AuthContext";
@@ -23,9 +23,14 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
     return false;
   };
 
-  return (
-    <AuthContext.Provider value={{ user, signIn, signout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  // Função que faz logout na aplicação
+  const signout = async () => {
+    setUser(null);
+    setToken("");
+    await api.logout();
+  };
+
+  const auth = useMemo(() => ({ user, signIn, signout }), []);
+
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
