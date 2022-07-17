@@ -7,11 +7,17 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
   const [user, setUser] = useState<IUser | null>(null);
   const api = useApi();
 
+  // Função que salva token no localStorage
+  const setToken = (token: string) => {
+    localStorage.setItem("authToken", token);
+  };
+
   // Função que valida usuário e retorna um booleano
   const signIn = async ({ email, password }: ISignInData): Promise<boolean> => {
     const { token, user } = await api.sigIn({ email, password });
     if (token && user) {
       setUser(user);
+      setToken(token);
       return true;
     }
     return false;
