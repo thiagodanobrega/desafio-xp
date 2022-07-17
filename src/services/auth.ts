@@ -38,4 +38,9 @@ export const useApi = () => ({
     // const response = await api.post("/signin", { email, password });
     // return response.data;
   },
+  logout: async () => {
+    return { status: true };
+    // const response = await api.post("/logout");
+    // return response.data;
+  },
 });
