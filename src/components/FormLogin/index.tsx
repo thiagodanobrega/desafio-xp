@@ -10,6 +10,7 @@ import { FormLoginWrapper } from "./style";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
   const [isErrorLogin, setIsErrorLogin] = useState(false);
 
   const auth = useContext(AuthContext);
@@ -44,11 +45,14 @@ function LoginForm() {
 
   const handleSigIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoadingLogin(true);
     const isAuthenticated = await auth.signIn({ email, password });
     if (isAuthenticated) {
+      setIsLoadingLogin(false);
       setIsErrorLogin(false);
       navigate("/home");
     } else {
+      setIsLoadingLogin(false);
       setIsErrorLogin(true);
     }
   };
@@ -72,7 +76,16 @@ function LoginForm() {
       </span>
 
       <Button type="submit" disabled={disabledButton()}>
-        <p>ENTRAR</p>
+        {isLoadingLogin ? (
+          <CircleNotch
+            size={32}
+            color="black"
+            weight="bold"
+            className="animate-spin"
+          />
+        ) : (
+          <p>ENTRAR</p>
+        )}
       </Button>
     </FormLoginWrapper>
   );
