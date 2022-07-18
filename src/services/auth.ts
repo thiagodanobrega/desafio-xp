@@ -7,6 +7,11 @@ import { ISignInData } from "../contexts/Auth/AuthContext";
 //   baseURL: process.env.REACT_APP_API,
 // });
 
+const userTest = {
+  email: "thiagons@live.com",
+  password: "1234567",
+};
+
 // função que gera um delay
 const delay = (amount = 750) =>
   // eslint-disable-next-line no-promise-executor-return
@@ -28,17 +33,22 @@ export const useApi = () => ({
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   sigIn: async ({ email, password }: ISignInData) => {
-    return {
-      token: uuid(),
-      user: {
-        name: "Thiago Nóbrega",
-        email: "thiagons@live.com",
-      },
-    };
+    await delay();
+    if (userTest.email === email && userTest.password === password) {
+      return {
+        token: uuid(),
+        user: {
+          name: "Thiago Nóbrega",
+          email: "thiagons@live.com",
+        },
+      };
+    }
+    return { error: "Deu ruim" };
     // const response = await api.post("/signin", { email, password });
     // return response.data;
   },
   logout: async () => {
+    await delay();
     return { status: true };
     // const response = await api.post("/logout");
     // return response.data;
