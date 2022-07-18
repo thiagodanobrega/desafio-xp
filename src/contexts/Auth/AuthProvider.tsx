@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { useApi } from "../../services/auth";
 import { AuthContext, ISignInData, IUser } from "./AuthContext";
@@ -6,6 +6,20 @@ import { AuthContext, ISignInData, IUser } from "./AuthContext";
 export function AuthProvider({ children }: { children: JSX.Element }) {
   const [user, setUser] = useState<IUser | null>(null);
   const api = useApi();
+
+  // Validando token do localStorage
+  useEffect(() => {
+    const validateToken = async () => {
+      const storageToken = localStorage.getItem("authToken");
+      if (storageToken) {
+        const data = await api.validateToken(storageToken);
+        if (data.user) {
+          setUser(data.user);
+        }
+      }
+    };
+    validateToken();
+  }, [api]);
 
   // Função que salva token no localStorage
   const setToken = (token: string) => {
