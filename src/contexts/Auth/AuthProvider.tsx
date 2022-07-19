@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useApi } from "../../services/auth";
 import { AuthContext, ISignInData, IUser } from "./AuthContext";
@@ -19,7 +19,7 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
       }
     };
     validateToken();
-  }, [api]);
+  }, []);
 
   // Função que salva token no localStorage
   const setToken = (token: string) => {
@@ -44,7 +44,12 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
     await api.logout();
   };
 
-  const auth = useMemo(() => ({ user, signIn, signout }), []);
+  // const auth = useMemo(() => ({ user, signIn, signout }), []);
 
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+  return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <AuthContext.Provider value={{ user, signIn, signout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
