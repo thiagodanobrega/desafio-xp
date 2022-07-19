@@ -8,8 +8,20 @@ import TransactionForm from "./TransactionForm";
 
 export function AccountModal() {
   const [isOpen, setIsOppen] = useState(false);
+  const [transactionValue, setTransactionValue] = useState<string | null>(null);
+  const [transactionSent, setTransactionSent] = useState(false);
+
+  const accountTransaction = (event: { target: HTMLInputElement }) => {
+    setTransactionValue(event.target.value);
+  };
+
+  const disabledButton = () => {
+    if (transactionValue) return false;
+    return true;
+  };
 
   function openModal() {
+    setTransactionSent(false);
     setIsOppen(true);
   }
 
@@ -70,6 +82,27 @@ export function AccountModal() {
                       <X weight="bold" />
                     </button>
                   </Dialog.Title>
+
+                  <div className="w-full mt-2">
+                    {transactionSent ? (
+                      <SuccessForm />
+                    ) : (
+                      <>
+                        <TransactionForm
+                          accountTransaction={accountTransaction}
+                        />
+                        <div className="mt-10">
+                          <Button
+                            type="button"
+                            disabled={disabledButton()}
+                            onClick={() => setTransactionSent(true)}
+                          >
+                            Confirmar
+                          </Button>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
