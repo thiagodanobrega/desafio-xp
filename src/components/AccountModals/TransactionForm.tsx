@@ -3,38 +3,44 @@ import React, { useState } from "react";
 import Input from "../Input";
 
 interface IAccountForm {
-  accountTransaction: (event: { target: HTMLInputElement }) => void;
+  handleTypeTransaction: (event: { target: HTMLInputElement }) => void;
+  typeTransactionOne: string;
+  typeTransactionTwo: string;
 }
 
-function TransactionForm({ accountTransaction }: IAccountForm) {
-  const [transactionType, setTransactionType] = useState("deposit");
+function TransactionForm({
+  handleTypeTransaction,
+  typeTransactionOne,
+  typeTransactionTwo,
+}: IAccountForm) {
+  const [transactionType, setTransactionType] = useState(typeTransactionOne);
 
   return (
     <div className="mt-5 flex flex-col gap-4">
       <div className="flex justify-between items-center gap-5">
         <button
           type="button"
-          onClick={() => setTransactionType("deposit")}
+          onClick={() => setTransactionType(typeTransactionOne)}
           className={`bg-emerald-500 hover:bg-emerald-400 transition-all flex-grow mt-2 flex justify-center items-center py-2 px-4 border border-transparent rounded-md font-bold text-gray-900 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:ring-emerald-500 ${
-            transactionType !== "deposit" && "opacity-20"
+            transactionType !== typeTransactionOne && "opacity-20"
           } `}
         >
-          Depósito
+          {typeTransactionOne}
         </button>
         <button
           type="button"
-          onClick={() => setTransactionType("withdraw")}
+          onClick={() => setTransactionType(typeTransactionTwo)}
           className={`bg-emerald-500 hover:bg-emerald-400 transition-all flex-grow mt-2 flex justify-center items-center py-2 px-4 border border-transparent rounded-md font-bold text-gray-900 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:ring-emerald-500 ${
-            transactionType !== "withdraw" && "opacity-20"
+            transactionType !== typeTransactionTwo && "opacity-20"
           } `}
         >
-          Saque
+          {typeTransactionTwo}
         </button>
       </div>
       <Input
         type="number"
         placeholder="Informe o valor"
-        funcEvent={accountTransaction}
+        funcEvent={handleTypeTransaction}
       />
     </div>
   );
