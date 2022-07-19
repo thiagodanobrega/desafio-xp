@@ -1,4 +1,6 @@
-import React from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { X } from "phosphor-react";
+import React, { Fragment, useState } from "react";
 
 // eslint-disable-next-line import-helpers/order-imports
 import { IUserAssets } from "../../../contexts/Asset/AssetContext";
@@ -11,12 +13,18 @@ interface IAssetProps {
 }
 
 function ContentTable({ assets }: IAssetProps) {
+  const [isOpen, setIsOppen] = useState(false);
+
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {assets &&
         assets.map((asset) => (
-          <ContentOfTable key={asset}>
+          <ContentOfTable
+            type="button"
+            key={asset.idAsset}
+            onClick={() => setIsOppen(true)}
+          >
             <span className="text-left">{asset.name}</span>
             <span className="text-center">
               {!asset?.idUser ? 1 : asset.quantity}
