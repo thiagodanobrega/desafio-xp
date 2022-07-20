@@ -6,7 +6,7 @@ import MyAssets from "../components/TableAssets/MyAssets";
 
 function Home() {
   return (
-    <div>
+    <div className="scroll-smooth">
       <Header />
       <main className="flex justify-center">
         <div className="space-y-3 mb-10 w-[calc(100vw-3rem)] lg:w-[50rem]">
