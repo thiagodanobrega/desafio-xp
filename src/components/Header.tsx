@@ -1,7 +1,7 @@
 import { Eye, EyeSlash } from "phosphor-react";
 import React, { useState } from "react";
 
-import { AccountModal } from "./AccountModals/AccountModal";
+import AccountModal from "./AccountModals/AccountModal";
 import Carousel from "./Carousel";
 import DropdownLogout from "./DropdownLogout";
 
