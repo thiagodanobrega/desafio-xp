@@ -26,10 +26,10 @@ function DropdownLogout() {
         <CaretDown />
       </Popover.Button>
       <Popover.Panel className="absolute right-0 z-10">
-        <div className="flex flex-col w-16 bg-background rounded-md shadow-lg ring-1 ring-black ring-opacity-5 overflow-auto">
+        <div className="flex flex-col w-16 bg-secondary hover:bg-amber-300 text-gray-900 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 overflow-auto">
           <button
             type="button"
-            className="flex text-center items-center w-full py-2 pl-3 pr-4 transition duration-150 ease-in-out"
+            className="flex text-center items-center w-full py-2 px-2 justify-center transition duration-150 ease-in-out"
             onClick={logout}
             title="Botão que faz logout"
           >
