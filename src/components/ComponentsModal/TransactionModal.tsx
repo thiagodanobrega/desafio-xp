@@ -48,6 +48,16 @@ function TransactionModal({
     return true;
   };
 
+  const sendPurchase = () => {
+    api.postPurchase({
+      userId: user?.id,
+      idAsset,
+      quantity: transactionValue,
+    });
+    setRefreshPageData(!refreshPageData);
+    return setTransactionSent(true);
+  };
+
   const validatePurchase = () => {
     if (transactionValue && transactionValue * 100 > balance) {
       return setErrorMessage("Saldo disponível insuficiente!");
