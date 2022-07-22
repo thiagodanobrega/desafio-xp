@@ -55,6 +55,7 @@ function TransactionModal({
   }) => {
     const value = event.target.value.replace(/[^0-9]/g, "");
     setTransactionValue(Number(value));
+    setErrorMessage(null);
   };
 
   const disabledButton = () => {
