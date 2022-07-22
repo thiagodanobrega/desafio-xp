@@ -10,4 +10,5 @@ export const Button = tw.button`
   font-bold text-gray-900 
   focus:outline-none focus:border-secondary focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:ring-secondary
   disabled:opacity-30
+  uppercase
 `;

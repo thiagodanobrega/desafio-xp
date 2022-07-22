@@ -38,6 +38,8 @@ function TransactionModal({
   const { user } = useContext(AuthContext);
   const { trendingCoins } = useContext(CryptoContext);
   const cryptoObj = trendingCoins?.find((coin) => coin.id === name);
+  const profit = cryptoObj && cryptoObj?.price_change_percentage_24h >= 0;
+
   const handleTransactionValueChange = (event: {
     target: HTMLInputElement;
   }) => {
@@ -147,6 +149,28 @@ function TransactionModal({
                 <h2 className="uppercase text-base font-bold">{name}</h2>
               </div>
               <Graphic idCrypto={name} />
+              <div className="flex justify-between items-center mt-5">
+                <span>Você possui 0 ativos dessa moeda</span>
+                <div className="flex flex-col">
+                  <div className="flex gap-2 uppercase text-sm">
+                    {cryptoObj?.symbol}
+                    <span
+                      className={`${
+                        profit ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {profit && "+"}
+                      {cryptoObj?.price_change_percentage_24h?.toFixed(2)}%
+                    </span>
+                  </div>
+                  <span className="font-bold">
+                    {cryptoObj?.current_price.toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}
+                  </span>
+                </div>
+              </div>
             </>
           )}
           <TransactionForm
