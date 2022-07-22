@@ -48,6 +48,17 @@ function TransactionModal({
     return true;
   };
 
+  const validatePurchase = () => {
+    if (transactionValue && transactionValue * 100 > balance) {
+      return setErrorMessage("Saldo disponível insuficiente!");
+    }
+    const assetObj = allAssets.find((asset) => asset.idAsset === idAsset);
+    if (assetObj && transactionValue && transactionValue > assetObj?.quantity) {
+      return setErrorMessage("Quantidade insuficiente na corretora!");
+    }
+    return sendPurchase();
+  };
+
   const sendSale = () => {
     api.postSell({
       userId: user?.id,
