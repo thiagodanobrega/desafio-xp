@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useApi } from "../../services/auth";
 import { AuthContext, ISignInData, IUser } from "./AuthContext";
 
+interface IUserLogged {
+  email: string;
+  date: string;
+}
 export function AuthProvider({ children }: { children: JSX.Element }) {
   const [user, setUser] = useState<IUser | null>(null);
   const api = useApi();
@@ -21,6 +25,10 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
     validateToken();
   }, []);
 
+  const saveEmailLocalSorage = (user: IUserLogged) => {
+    localStorage.setItem("user", JSON.stringify(user));
+  };
+
   // Função que salva token no localStorage
   const setToken = (token: string) => {
     localStorage.setItem("authToken", token);
@@ -32,6 +40,7 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
     if (token && user) {
       setUser(user);
       setToken(token);
+      saveEmailLocalSorage({ email, date: new Date().toLocaleString() });
       return true;
     }
     return false;
@@ -43,8 +52,6 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
     setToken("");
     await api.logout();
   };
-
-  // const auth = useMemo(() => ({ user, signIn, signout }), []);
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
