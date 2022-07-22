@@ -58,6 +58,7 @@ function TransactionModal({
         <SuccessForm />
       ) : (
         <div>
+          {typeTransactionOne === "Comprar" && <Graphic idCrypto={name} />}
           <TransactionForm
             handleTransactionValueChange={handleTransactionValueChange}
             typeTransactionOne={typeTransactionOne}
