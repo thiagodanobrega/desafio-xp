@@ -141,7 +141,7 @@ function TransactionModal({
   };
 
   return (
-    <div className="w-full mt-2">
+    <div className="w-full mt-2 relative">
       {transactionSent ? (
         <SuccessForm />
       ) : (
@@ -199,7 +199,7 @@ function TransactionModal({
           <p
             className={`${
               errorMessage ? "block" : "invisible "
-            } mt-2 text-center text-red-500`}
+            }  text-center text-red-500 absolute bottom-14 w-full`}
           >
             {errorMessage}
           </p>
