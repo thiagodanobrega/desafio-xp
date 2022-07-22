@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 
 import { AssetContext } from "../../contexts/Asset/AssetContext";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
+import { CryptoContext } from "../../contexts/Crypto/CryptoContext";
 import { assetApi } from "../../services/assetApi";
 import TransactionForm from "../AccountModals/TransactionForm";
 import { Button } from "../Button";
@@ -35,7 +36,8 @@ function TransactionModal({
   const { balance, allAssets, setRefreshPageData, refreshPageData } =
     useContext(AssetContext);
   const { user } = useContext(AuthContext);
-
+  const { trendingCoins } = useContext(CryptoContext);
+  const cryptoObj = trendingCoins?.find((coin) => coin.id === name);
   const handleTransactionValueChange = (event: {
     target: HTMLInputElement;
   }) => {
@@ -134,7 +136,19 @@ function TransactionModal({
         <SuccessForm />
       ) : (
         <div>
-          {typeTransactionOne === "Comprar" && <Graphic idCrypto={name} />}
+          {typeTransactionOne === "Comprar" && (
+            <>
+              <div className="-mt-3 mb-1 flex items-center gap-2">
+                <img
+                  src={cryptoObj?.image}
+                  alt={`Logo do criptoativo ${name}`}
+                  className="h-10"
+                />
+                <h2 className="uppercase text-base font-bold">{name}</h2>
+              </div>
+              <Graphic idCrypto={name} />
+            </>
+          )}
           <TransactionForm
             handleTransactionValueChange={handleTransactionValueChange}
             typeTransactionOne={typeTransactionOne}

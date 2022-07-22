@@ -57,7 +57,7 @@ function Graphic({ idCrypto }: IGraphic) {
 
     datasets: [
       {
-        label: "Bitcoin",
+        label: "linha",
         data:
           historicPrice && historicPrice.map((price) => Math.floor(price[1])),
         borderColor: "#EEBC1D",
