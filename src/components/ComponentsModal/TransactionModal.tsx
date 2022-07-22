@@ -48,6 +48,13 @@ function TransactionModal({
     return true;
   };
 
+  const validateWithdrawal = () => {
+    if (transactionValue && transactionValue > balance) {
+      return setErrorMessage("Saldo disponível insuficiente!");
+    }
+    return sendWithdrawal();
+  };
+
   const sendPurchase = () => {
     api.postPurchase({
       userId: user?.id,
