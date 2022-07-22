@@ -48,6 +48,25 @@ function TransactionModal({
     return true;
   };
 
+  const validateTransactionType = () => {
+    switch (transactionType) {
+      case "Depósito":
+        sendDeposit();
+        break;
+      case "Saque":
+        validateWithdrawal();
+        break;
+      case "Comprar":
+        validatePurchase();
+        break;
+      case "Vender":
+        validateSell();
+        break;
+      default:
+        setErrorMessage("Qual transação deseja realizar?");
+    }
+  };
+
   const sendTransaction = () => {
     validateTransactionType();
   };
