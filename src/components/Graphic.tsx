@@ -28,6 +28,7 @@ ChartJS.register(
 interface IGraphic {
   idCrypto: string;
 }
+const daysDefualt = [1, 3, 7];
 
 function Graphic({ idCrypto }: IGraphic) {
   const api = cryptoApi();
@@ -43,7 +44,7 @@ function Graphic({ idCrypto }: IGraphic) {
 
   useEffect(() => {
     fetchHistoricPrice();
-  }, []);
+  }, [days]);
 
   const data = {
     labels:
@@ -73,7 +74,27 @@ function Graphic({ idCrypto }: IGraphic) {
     },
   };
 
-  return <div>{historicPrice && <Line options={options} data={data} />}</div>;
+  return (
+    <div>
+      {historicPrice && (
+        <>
+          <Line options={options} data={data} />
+          <div className="mt-2 flex justify-center gap-4">
+            {daysDefualt.map((day) => (
+              <button
+                type="button"
+                key={day}
+                className={`text-xs font-bold px-2 py-1 rounded-md border focus:outline-none focus:border-zinc-300 focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:ring-zinc-300 ${
+                  days === day ? "bg-zinc-300 text-black" : "bg-background"
+                }`}
+                onClick={() => setDays(day)}
+              >{`${day} D`}</button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default Graphic;
