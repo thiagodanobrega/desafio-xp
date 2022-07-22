@@ -30,6 +30,21 @@ interface IGraphic {
 }
 
 function Graphic({ idCrypto }: IGraphic) {
+  const api = cryptoApi();
+  const [historicPrice, setHistoricPrice] = useState<number[][] | undefined>(
+    []
+  );
+  const [days, setDays] = useState<number>(1);
+
+  const fetchHistoricPrice = async () => {
+    const historic = await api.fetchHistoricPrices(idCrypto, days);
+    setHistoricPrice(historic);
+  };
+
+  useEffect(() => {
+    fetchHistoricPrice();
+  }, []);
+
   return <div />;
 }
 
