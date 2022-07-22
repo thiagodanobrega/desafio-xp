@@ -61,7 +61,7 @@ const myAssets = [
   },
 ];
 
-const myBalance = {
+let myBalance = {
   id: 1,
   balance: 1000,
 };
@@ -87,6 +87,14 @@ export const assetApi = {
   getBalance: async (userId: any) => {
     await delay();
     return myBalance;
+    // const response = await api.get(`/assets/${userId}`);
+    // return response.data;
+  },
+
+  postDeposit: async (infosDeposit: { userId: any; value: number }) => {
+    await delay();
+    const newBalance = myBalance.balance + infosDeposit.value;
+    myBalance = { ...myBalance, balance: newBalance };
     // const response = await api.get(`/assets/${userId}`);
     // return response.data;
   },
