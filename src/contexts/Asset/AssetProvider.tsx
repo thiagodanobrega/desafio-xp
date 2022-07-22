@@ -8,10 +8,11 @@ export function AssetProvider({ children }: { children: JSX.Element }) {
   const [userAssets, setUserAssets] = useState<IUserAssets[]>([]);
   const [allAssets, setallAssets] = useState<IAllAssets[]>([]);
   const [availableAssets, setAvailableAssets] = useState<IAllAssets[]>([]);
-
+  const [balance, setBalance] = useState<number>(1000);
+  const [refreshPageData, setRefreshPageData] = useState(true);
   const auth = useContext(AuthContext);
-  const api = assetApi();
-
+  // const { postDeposit, postPurchase, postSell, postWithdraw } = assetApi;
+  const api = assetApi;
   const filteringAvailableAssets = (
     myAssets: IUserAssets[],
     assets: IAllAssets[]
@@ -22,20 +23,36 @@ export function AssetProvider({ children }: { children: JSX.Element }) {
     setAvailableAssets(filteringAssets);
   };
 
+  const getAssets = async () => {
+    const myAssets = await api.getMyAssets(auth.user?.id);
+    const assets = await api.getAllAssets();
+    setUserAssets(myAssets);
+    setallAssets(assets);
+    filteringAvailableAssets(myAssets, assets);
+  };
+
+  const getBalance = async () => {
+    const userBalance = await api.getBalance(auth.user?.id);
+    setBalance(userBalance.balance);
+  };
+
   useEffect(() => {
-    const getAssets = async () => {
-      const myAssets = await api.getMyAssets(auth.user?.id);
-      const assets = await api.getAllAssets();
-      setUserAssets(myAssets);
-      setallAssets(assets);
-      filteringAvailableAssets(myAssets, assets);
-    };
     getAssets();
-  }, []);
+    getBalance();
+  }, [refreshPageData]);
 
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <AssetContext.Provider value={{ userAssets, availableAssets, allAssets }}>
+    <AssetContext.Provider
+      // eslint-disable-next-line react/jsx-no-constructed-context-values
+      value={{
+        userAssets,
+        availableAssets,
+        allAssets,
+        balance,
+        setRefreshPageData,
+        refreshPageData,
+      }}
+    >
       {children}
     </AssetContext.Provider>
   );
