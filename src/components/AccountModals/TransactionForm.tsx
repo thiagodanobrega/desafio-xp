@@ -4,7 +4,7 @@ import { AssetContext } from "../../contexts/Asset/AssetContext";
 import InputMask from "../Input/InputMask";
 
 interface IAccountForm {
-  handleTypeTransaction: (event: { target: HTMLInputElement }) => void;
+  handleTransactionValueChange: (event: { target: HTMLInputElement }) => void;
   typeTransactionOne: string;
   typeTransactionTwo: string;
   transactionType: string;
@@ -13,7 +13,7 @@ interface IAccountForm {
 }
 
 function TransactionForm({
-  handleTypeTransaction,
+  handleTransactionValueChange,
   typeTransactionOne,
   typeTransactionTwo,
   setTransactionType,
@@ -58,7 +58,7 @@ function TransactionForm({
         }`}
         type="text"
         prefix={`${typeTransactionOne === "Comprar" ? "QTD " : "R$ "}`}
-        funcEvent={handleTypeTransaction}
+        funcEvent={handleTransactionValueChange}
       />
     </div>
   );
