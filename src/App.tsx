@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import AssetDetails from "./pages/AssetDetails";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -16,14 +15,6 @@ function App() {
         element={
           <WithAuth>
             <Home />
-          </WithAuth>
-        }
-      />
-      <Route
-        path="/asset/:id"
-        element={
-          <WithAuth>
-            <AssetDetails />
           </WithAuth>
         }
       />
