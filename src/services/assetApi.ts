@@ -5,7 +5,7 @@ import { delay } from "./auth";
 //   baseURL: process.env.REACT_APP_API,
 // });
 
-export const allAssets = [
+const allAssets = [
   {
     idAsset: 1,
     name: "bitcoin",
@@ -44,7 +44,7 @@ export const allAssets = [
   },
 ];
 
-export const myAssets = [
+const myAssets = [
   {
     idAsset: 1,
     idUser: 1,
@@ -61,8 +61,13 @@ export const myAssets = [
   },
 ];
 
+const myBalance = {
+  id: 1,
+  balance: 1000,
+};
+
 // simulando requisição a api
-export const assetApi = () => ({
+export const assetApi = {
   getAllAssets: async () => {
     await delay();
     return allAssets;
@@ -77,4 +82,12 @@ export const assetApi = () => ({
     // const response = await api.get(`/assets/${userId}`);
     // return response.data;
   },
-});
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getBalance: async (userId: any) => {
+    await delay();
+    return myBalance;
+    // const response = await api.get(`/assets/${userId}`);
+    // return response.data;
+  },
+};
