@@ -44,7 +44,7 @@ const allAssets = [
   },
 ];
 
-const myAssets = [
+let myAssets = [
   {
     idAsset: 1,
     idUser: 1,
@@ -147,6 +147,39 @@ export const assetApi = {
           asset.quantity += infosPurchase.quantity;
         }
       });
+    }
+    // const response = await api.get(`/assets/${userId}`);
+    // return response.data;
+  },
+
+  postSell: async (infosPurchase: {
+    idAsset: number | undefined;
+    quantity: number;
+    userId: number | undefined;
+  }) => {
+    await delay();
+
+    allAssets.forEach((asset) => {
+      if (asset.idAsset === infosPurchase.idAsset) {
+        // eslint-disable-next-line no-param-reassign
+        asset.quantity += infosPurchase.quantity;
+        const purchaseValue = infosPurchase.quantity * asset.value;
+        const newBalance = myBalance.balance + purchaseValue;
+        myBalance = { ...myBalance, balance: newBalance };
+      }
+    });
+
+    const asset = myAssets.find(
+      (asset) => asset.idAsset === infosPurchase.idAsset
+    );
+
+    if (infosPurchase.quantity === asset?.quantity) {
+      myAssets = myAssets.filter(
+        (asset) => asset.idAsset !== infosPurchase.idAsset
+      );
+    }
+    if (asset && infosPurchase.quantity < asset?.quantity) {
+      asset.quantity -= infosPurchase.quantity;
     }
     // const response = await api.get(`/assets/${userId}`);
     // return response.data;
