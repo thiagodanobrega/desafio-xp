@@ -48,6 +48,12 @@ function TransactionModal({
     return true;
   };
 
+  const sendWithdrawal = () => {
+    api.postWithdraw({ userId: user?.id, value: transactionValue });
+    setRefreshPageData(!refreshPageData);
+    return setTransactionSent(true);
+  };
+
   const validateWithdrawal = () => {
     if (transactionValue && transactionValue > balance) {
       return setErrorMessage("Saldo disponível insuficiente!");
