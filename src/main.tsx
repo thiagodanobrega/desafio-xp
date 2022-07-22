@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { AssetProvider } from "./contexts/Asset/AssetProvider";
 import { AuthProvider } from "./contexts/Auth/AuthProvider";
+import { CryptoProvider } from "./contexts/Crypto/CryptoProvider";
 import GlobalStyle from "./styles/global";
 import "./styles/global.css";
 
@@ -13,9 +14,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <GlobalStyle />
     <AuthProvider>
       <AssetProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <CryptoProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </CryptoProvider>
       </AssetProvider>
     </AuthProvider>
   </React.StrictMode>
