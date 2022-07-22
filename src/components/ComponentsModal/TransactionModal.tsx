@@ -33,11 +33,19 @@ function TransactionModal({
   const [transactionType, setTransactionType] = useState(typeTransactionOne);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const api = assetApi;
-  const { balance, allAssets, setRefreshPageData, refreshPageData } =
-    useContext(AssetContext);
+  const {
+    balance,
+    allAssets,
+    setRefreshPageData,
+    refreshPageData,
+    userAssets,
+  } = useContext(AssetContext);
   const { user } = useContext(AuthContext);
   const { trendingCoins } = useContext(CryptoContext);
   const cryptoObj = trendingCoins?.find((coin) => coin.id === name);
+  const assetUserObj = userAssets?.find((asset) => asset.idAsset === idAsset);
+  const assetBrokerObj = allAssets?.find((asset) => asset.idAsset === idAsset);
+
   const profit = cryptoObj && cryptoObj?.price_change_percentage_24h >= 0;
 
   const handleTransactionValueChange = (event: {
@@ -150,7 +158,14 @@ function TransactionModal({
               </div>
               <Graphic idCrypto={name} />
               <div className="flex justify-between items-center mt-5">
-                <span>Você possui 0 ativos dessa moeda</span>
+                <div>
+                  <p className="font-bold">
+                    {`Você possui ${
+                      assetUserObj ? assetUserObj.quantity : "0"
+                    } ativos`}
+                  </p>
+                  <p className="text-sm">{`1 ativo = R$ ${assetBrokerObj?.value} `}</p>
+                </div>
                 <div className="flex flex-col">
                   <div className="flex gap-2 uppercase text-sm">
                     {cryptoObj?.symbol}
