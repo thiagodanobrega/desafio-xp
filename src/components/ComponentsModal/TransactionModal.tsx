@@ -143,6 +143,13 @@ function TransactionModal({
             setTransactionType={setTransactionType}
             idAsset={idAsset}
           />
+          <p
+            className={`${
+              errorMessage ? "block" : "invisible "
+            } mt-2 text-center text-red-500`}
+          >
+            {errorMessage}
+          </p>
 
           <div className="mt-10">
             <Button
