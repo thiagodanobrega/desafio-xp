@@ -1,13 +1,14 @@
 import { Eye, EyeSlash } from "phosphor-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
+import { AssetContext } from "../contexts/Asset/AssetContext";
 import AccountModal from "./AccountModals/AccountModal";
 import Carousel from "./Carousel";
 import DropdownLogout from "./DropdownLogout";
 
 function Header() {
   const [isVisibleValue, setIsVisibleValue] = useState(true);
-
+  const { balance } = useContext(AssetContext);
   return (
     <header className="bg-background-xp bg-cover bg-center relative flex justify-center px-8 py-40">
       <div className="w-[calc(100vw-3rem)] lg:w-[50rem] absolute top-6 flex justify-between items-center">
@@ -33,7 +34,12 @@ function Header() {
           </button>
         </div>
         <h1 className="text-3xl font-bold">
-          {isVisibleValue ? "R$ 2.000,00" : "* * * * * * *"}
+          {isVisibleValue
+            ? balance.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })
+            : "* * * * * * *"}
         </h1>
         <AccountModal />
       </div>
