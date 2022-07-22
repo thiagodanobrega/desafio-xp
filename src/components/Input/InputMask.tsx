@@ -15,9 +15,24 @@ export default function InputMask({
   funcEvent,
   prefix,
 }: IInput) {
-  
+  const defaultMaskOptions = {
+    prefix,
+    suffix: "",
+    includeThousandsSeparator: true,
+    thousandsSeparatorSymbol: `${prefix === "R$ " ? "." : ""}`,
+    allowDecimal: false,
+    decimalSymbol: ".",
+    decimalLimit: 2,
+    integerLimit: 7,
+    allowNegative: false,
+    allowLeadingZeroes: false,
+  };
+
+  const currencyMask = createNumberMask({
+    ...defaultMaskOptions,
+  });
 
   return (
-    
+   
   );
 }
