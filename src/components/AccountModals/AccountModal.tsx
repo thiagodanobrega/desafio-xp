@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-no-bind */
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 
+import { AssetContext } from "../../contexts/Asset/AssetContext";
 import ModalHeader from "../ComponentsModal/ModalHeader";
 import TransactionModal from "../ComponentsModal/TransactionModal";
 import TransitionModal from "../ComponentsModal/TransitionModal";
@@ -9,6 +10,7 @@ import TransitionModal from "../ComponentsModal/TransitionModal";
 export default function AccountModal() {
   const [isOpen, setIsOppen] = useState(false);
   const [transactionSent, setTransactionSent] = useState(false);
+  const { balance } = useContext(AssetContext);
 
   function openModal() {
     setTransactionSent(false);
@@ -46,11 +48,17 @@ export default function AccountModal() {
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-background p-5 text-left align-middle shadow-xl transition-all">
                   <ModalHeader
                     setIsOppen={setIsOppen}
-                    title="Saldo: R$ 2.000,00"
+                    title={`Saldo: ${balance.toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}`}
+                    transactionSent={transactionSent}
                   />
                   <TransactionModal
                     transactionSent={transactionSent}
                     setTransactionSent={setTransactionSent}
+                    typeTransactionOne="Depósito"
+                    typeTransactionTwo="Saque"
                   />
                 </Dialog.Panel>
               </Transition.Child>
