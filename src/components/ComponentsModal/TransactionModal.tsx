@@ -1,4 +1,5 @@
 /* eslint-disable react/require-default-props */
+import { CircleNotch } from "phosphor-react";
 import React, { useContext, useState } from "react";
 
 import { AssetContext } from "../../contexts/Asset/AssetContext";
@@ -45,6 +46,7 @@ function TransactionModal({
   const cryptoObj = trendingCoins?.find((coin) => coin.id === name);
   const assetUserObj = userAssets?.find((asset) => asset.idAsset === idAsset);
   const assetBrokerObj = allAssets?.find((asset) => asset.idAsset === idAsset);
+  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
 
   const profit = cryptoObj && cryptoObj?.price_change_percentage_24h >= 0;
 
@@ -60,14 +62,18 @@ function TransactionModal({
     return true;
   };
 
-  const sendDeposit = () => {
-    api.postDeposit({ userId: user?.id, value: transactionValue });
+  const sendDeposit = async () => {
+    setIsLoadingLogin(true);
+    await api.postDeposit({ userId: user?.id, value: transactionValue });
+    setIsLoadingLogin(false);
     setRefreshPageData(!refreshPageData);
     setTransactionSent(true);
   };
 
-  const sendWithdrawal = () => {
-    api.postWithdraw({ userId: user?.id, value: transactionValue });
+  const sendWithdrawal = async () => {
+    setIsLoadingLogin(true);
+    await api.postWithdraw({ userId: user?.id, value: transactionValue });
+    setIsLoadingLogin(false);
     setRefreshPageData(!refreshPageData);
     return setTransactionSent(true);
   };
@@ -79,12 +85,14 @@ function TransactionModal({
     return sendWithdrawal();
   };
 
-  const sendPurchase = () => {
-    api.postPurchase({
+  const sendPurchase = async () => {
+    setIsLoadingLogin(true);
+    await api.postPurchase({
       userId: user?.id,
       idAsset,
       quantity: transactionValue,
     });
+    setIsLoadingLogin(false);
     setRefreshPageData(!refreshPageData);
     return setTransactionSent(true);
   };
@@ -100,12 +108,14 @@ function TransactionModal({
     return sendPurchase();
   };
 
-  const sendSale = () => {
-    api.postSell({
+  const sendSale = async () => {
+    setIsLoadingLogin(true);
+    await api.postSell({
       userId: user?.id,
       idAsset,
       quantity: transactionValue,
     });
+    setIsLoadingLogin(false);
     setRefreshPageData(!refreshPageData);
     return setTransactionSent(true);
   };
@@ -141,14 +151,14 @@ function TransactionModal({
   };
 
   return (
-    <div className="w-full mt-2 relative">
+    <div className="w-full mt-5 relative">
       {transactionSent ? (
         <SuccessForm />
       ) : (
-        <div>
+        <div className="mt-8">
           {typeTransactionOne === "Comprar" && (
             <>
-              <div className="-mt-3 mb-1 flex items-center gap-2">
+              <div className="absolute -top-9 flex items-center gap-2">
                 <img
                   src={cryptoObj?.image}
                   alt={`Logo do criptoativo ${name}`}
@@ -210,7 +220,16 @@ function TransactionModal({
               disabled={disabledButton()}
               onClick={sendTransaction}
             >
-              Confirmar
+              {isLoadingLogin ? (
+                <CircleNotch
+                  size={32}
+                  color="black"
+                  weight="bold"
+                  className="animate-spin"
+                />
+              ) : (
+                <p>Confirmar</p>
+              )}
             </Button>
           </div>
         </div>
