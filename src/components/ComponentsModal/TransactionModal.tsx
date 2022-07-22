@@ -48,6 +48,16 @@ function TransactionModal({
     return true;
   };
 
+  const sendSale = () => {
+    api.postSell({
+      userId: user?.id,
+      idAsset,
+      quantity: transactionValue,
+    });
+    setRefreshPageData(!refreshPageData);
+    return setTransactionSent(true);
+  };
+
   const validateSell = () => {
     if (qtdeAsset && transactionValue && transactionValue > qtdeAsset) {
       return setErrorMessage("Quantidade insuficiente na sua carteira!");
