@@ -106,4 +106,24 @@ export const assetApi = {
     // const response = await api.get(`/assets/${userId}`);
     // return response.data;
   },
+
+  postPurchase: async (infosPurchase: {
+    idAsset: number | undefined;
+    quantity: number;
+    userId: number | undefined;
+  }) => {
+    await delay();
+    allAssets.forEach((asset) => {
+      if (asset.idAsset === infosPurchase.idAsset) {
+        // eslint-disable-next-line no-param-reassign
+        asset.quantity -= infosPurchase.quantity;
+        const purchaseValue = infosPurchase.quantity * asset.value;
+        const newBalance = myBalance.balance - purchaseValue;
+        myBalance = { ...myBalance, balance: newBalance };
+      }
+    });
+
+    // const response = await api.get(`/assets/${userId}`);
+    // return response.data;
+  },
 };
