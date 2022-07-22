@@ -98,4 +98,12 @@ export const assetApi = {
     // const response = await api.get(`/assets/${userId}`);
     // return response.data;
   },
+
+  postWithdraw: async (infosWithdraw: { userId: any; value: number }) => {
+    await delay();
+    const newBalance = myBalance.balance - infosWithdraw.value;
+    myBalance = { ...myBalance, balance: newBalance };
+    // const response = await api.get(`/assets/${userId}`);
+    // return response.data;
+  },
 };
