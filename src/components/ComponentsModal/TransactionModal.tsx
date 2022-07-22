@@ -48,6 +48,12 @@ function TransactionModal({
     return true;
   };
 
+  const sendDeposit = () => {
+    api.postDeposit({ userId: user?.id, value: transactionValue });
+    setRefreshPageData(!refreshPageData);
+    setTransactionSent(true);
+  };
+
   const sendWithdrawal = () => {
     api.postWithdraw({ userId: user?.id, value: transactionValue });
     setRefreshPageData(!refreshPageData);
