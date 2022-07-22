@@ -122,7 +122,32 @@ export const assetApi = {
         myBalance = { ...myBalance, balance: newBalance };
       }
     });
+    const boolean = myAssets.some(
+      (asset) => asset.idAsset === infosPurchase.idAsset
+    );
 
+    if (!boolean) {
+      const asset = allAssets.find(
+        (asset) => asset.idAsset === infosPurchase.idAsset
+      );
+      if (asset && infosPurchase.userId && infosPurchase.idAsset) {
+        const newAsset = {
+          idAsset: infosPurchase.idAsset,
+          idUser: 1,
+          name: asset.name,
+          quantity: infosPurchase.quantity,
+          value: 100,
+        };
+        myAssets.push(newAsset);
+      }
+    } else {
+      myAssets.forEach((asset) => {
+        if (asset.idAsset === infosPurchase.idAsset) {
+          // eslint-disable-next-line no-param-reassign
+          asset.quantity += infosPurchase.quantity;
+        }
+      });
+    }
     // const response = await api.get(`/assets/${userId}`);
     // return response.data;
   },
