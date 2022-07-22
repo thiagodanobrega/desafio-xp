@@ -7,7 +7,6 @@ import Carousel from "./Carousel";
 import DropdownLogout from "./DropdownLogout";
 
 function Header() {
-  const [isVisibleValue, setIsVisibleValue] = useState(true);
   const { balance } = useContext(AssetContext);
   return (
     <header className="bg-background-xp bg-cover bg-center relative flex justify-center px-8 py-40">
@@ -22,24 +21,12 @@ function Header() {
       <div className="absolute top-28">
         <div className="flex justify-between items-center">
           <span>Saldo</span>
-          <button
-            type="button"
-            onClick={() => setIsVisibleValue(!isVisibleValue)}
-          >
-            {isVisibleValue ? (
-              <Eye size={20} color="white" weight="bold" />
-            ) : (
-              <EyeSlash size={20} color="white" weight="bold" />
-            )}
-          </button>
         </div>
         <h1 className="text-3xl font-bold">
-          {isVisibleValue
-            ? balance.toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              })
-            : "* * * * * * *"}
+          {balance.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}
         </h1>
         <AccountModal />
       </div>
