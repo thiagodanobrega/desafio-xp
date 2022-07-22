@@ -48,6 +48,13 @@ function TransactionModal({
     return true;
   };
 
+  const validateSell = () => {
+    if (qtdeAsset && transactionValue && transactionValue > qtdeAsset) {
+      return setErrorMessage("Quantidade insuficiente na sua carteira!");
+    }
+    return sendSale();
+  };
+
   const validateTransactionType = () => {
     switch (transactionType) {
       case "Depósito":
