@@ -1,5 +1,6 @@
-import { CircleNotch } from "phosphor-react";
+import { CircleNotch, Envelope, LockSimple } from "phosphor-react";
 import React, { useState, useContext, useEffect } from "react";
+import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/Auth/AuthContext";
@@ -62,19 +63,31 @@ function LoginForm() {
 
   return (
     <FormLoginWrapper onSubmit={handleSigIn}>
-      <Input
-        type="email"
-        placeholder="Email"
-        value={email}
-        funcEvent={handleEmailInput}
-      />
-
-      <Input
-        type="password"
-        value={password}
-        placeholder="Senha"
-        funcEvent={handlePasswordInput}
-      />
+      <div className="relative">
+        <Input
+          type="email"
+          placeholder="Email"
+          value={email}
+          funcEvent={handleEmailInput}
+        />
+        <MdEmail
+          size={20}
+          className="absolute top-[0.85rem] left-2 text-background"
+        />
+      </div>
+      <div className="relative">
+        <Input
+          type="password"
+          value={password}
+          placeholder="Senha"
+          funcEvent={handlePasswordInput}
+        />
+        <LockSimple
+          size={20}
+          weight="fill"
+          className="absolute top-[0.85rem] left-2 text-background"
+        />
+      </div>
 
       <span
         className={`${

@@ -8,7 +8,7 @@ import { ISignInData } from "../contexts/Auth/AuthContext";
 // });
 
 const userTest = {
-  email: "thiagons@live.com",
+  email: "teste@email.com",
   password: "1234567",
 };
 
@@ -32,7 +32,7 @@ export const useApi = () => ({
         user: {
           id: 1,
           name: "Thiago Nóbrega",
-          email: "thiagons@live.com",
+          email: "teste@email.com",
         },
       };
     }
@@ -50,7 +50,7 @@ export const useApi = () => ({
         user: {
           id: 1,
           name: "Thiago Nóbrega",
-          email: "thiagons@live.com",
+          email: "teste@email.com",
         },
       };
     }
