@@ -26,5 +26,27 @@ describe("1 - Testando a tela de login", () => {
     expect(screen.getByTestId(PASSWORD_INPUT_TEST_ID)).toBeInTheDocument();
     expect(screen.getByTestId(BUTTON_LOGIN_TEST_ID)).toBeInTheDocument();
   });
+  test("Verifica se botão de login fica habilitado após email e senha válidos'", () => {
+    renderWithRouter(<Login />, { route: "/" });
+    const inputEmail = screen.getByTestId(EMAIL_INPUT_TEST_ID);
+    const inputPassword = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
+    const loginButton = screen.getByTestId(BUTTON_LOGIN_TEST_ID);
+
+    fireEvent.change(inputEmail, INVALID_EMAIL);
+    fireEvent.change(inputPassword, INVALID_PASSWORD);
+    expect(loginButton).toBeDisabled();
+
+    fireEvent.change(inputEmail, INVALID_EMAIL);
+    fireEvent.change(inputPassword, VALID_PASSWORD);
+    expect(loginButton).toBeDisabled();
+
+    fireEvent.change(inputEmail, VALID_EMAIL);
+    fireEvent.change(inputPassword, INVALID_PASSWORD);
+    expect(loginButton).toBeDisabled();
+
+    fireEvent.change(inputEmail, { target: { value: "test@email.com" } });
+    fireEvent.change(inputPassword, { target: { value: "1234567" } });
+    expect(loginButton).toBeEnabled();
+  });
 });
 export {};
