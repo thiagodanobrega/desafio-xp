@@ -13,7 +13,8 @@ export interface ISignInData {
 
 export interface IAuthContext {
   user: IUser | null;
-  signIn: (data: ISignInData) => Promise<boolean>;
+  setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+  // signIn: (data: ISignInData) => Promise<boolean>;
   signout: () => void;
 }
 

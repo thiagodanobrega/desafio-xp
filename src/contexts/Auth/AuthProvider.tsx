@@ -34,18 +34,6 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
     localStorage.setItem("authToken", token);
   };
 
-  // Função que valida usuário e retorna um booleano
-  const signIn = async ({ email, password }: ISignInData): Promise<boolean> => {
-    const { token, user } = await api.sigIn({ email, password });
-    if (token && user) {
-      setUser(user);
-      setToken(token);
-      saveEmailLocalSorage({ email, date: new Date().toLocaleString() });
-      return true;
-    }
-    return false;
-  };
-
   // Função que faz logout na aplicação
   const signout = async () => {
     setUser(null);
@@ -55,7 +43,7 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <AuthContext.Provider value={{ user, signIn, signout }}>
+    <AuthContext.Provider value={{ user, setUser, signout }}>
       {children}
     </AuthContext.Provider>
   );

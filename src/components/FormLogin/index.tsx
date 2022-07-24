@@ -1,19 +1,25 @@
-import { CircleNotch, Envelope, LockSimple } from "phosphor-react";
+import { CircleNotch, LockSimple } from "phosphor-react";
 import React, { useState, useContext, useEffect } from "react";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/Auth/AuthContext";
+import { useApi } from "../../services/auth";
 import { Button } from "../Button";
 import Input from "../Input";
 import { FormLoginWrapper } from "./style";
 
+interface IUserLogged {
+  email: string;
+  date: string;
+}
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoadingLogin, setIsLoadingLogin] = useState(false);
   const [isErrorLogin, setIsErrorLogin] = useState(false);
-  const auth = useContext(AuthContext);
+  const api = useApi();
+  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   useEffect(() => {
     const storageUser = localStorage.getItem("user");
@@ -38,27 +44,36 @@ function LoginForm() {
   const handleEmailInput = (event: { target: HTMLInputElement }) => {
     setEmail(event.target.value);
     setIsErrorLogin(false);
-    // validateInputsLogin();
   };
 
   const handlePasswordInput = (event: { target: HTMLInputElement }) => {
     setPassword(event.target.value);
     setIsErrorLogin(false);
-    // validateInputsLogin();
+  };
+
+  const saveEmailLocalSorage = (user: IUserLogged) => {
+    localStorage.setItem("user", JSON.stringify(user));
+  };
+
+  // Função que salva token no localStorage
+  const setToken = (token: string) => {
+    localStorage.setItem("authToken", token);
   };
 
   const handleSigIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoadingLogin(true);
-    const isAuthenticated = await auth.signIn({ email, password });
-    if (isAuthenticated) {
+    const { token, user } = await api.sigIn({ email, password });
+    if (token && user) {
+      setUser(user);
+      setToken(token);
+      saveEmailLocalSorage({ email, date: new Date().toLocaleString() });
       setIsLoadingLogin(false);
       setIsErrorLogin(false);
       navigate("/home");
-    } else {
-      setIsLoadingLogin(false);
-      setIsErrorLogin(true);
     }
+    setIsLoadingLogin(false);
+    setIsErrorLogin(true);
   };
 
   return (
