@@ -38,13 +38,13 @@ function LoginForm() {
   const handleEmailInput = (event: { target: HTMLInputElement }) => {
     setEmail(event.target.value);
     setIsErrorLogin(false);
-    validateInputsLogin();
+    // validateInputsLogin();
   };
 
   const handlePasswordInput = (event: { target: HTMLInputElement }) => {
     setPassword(event.target.value);
     setIsErrorLogin(false);
-    validateInputsLogin();
+    // validateInputsLogin();
   };
 
   const handleSigIn = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -68,6 +68,7 @@ function LoginForm() {
           type="email"
           placeholder="Email"
           value={email}
+          dataTestId="input-email"
           funcEvent={handleEmailInput}
         />
         <MdEmail
@@ -80,6 +81,7 @@ function LoginForm() {
           type="password"
           value={password}
           placeholder="Senha"
+          dataTestId="input-password"
           funcEvent={handlePasswordInput}
         />
         <LockSimple
@@ -88,7 +90,6 @@ function LoginForm() {
           className="absolute top-[0.85rem] left-2 text-background"
         />
       </div>
-
       <span
         className={`${
           isErrorLogin ? "block" : "invisible "
@@ -97,7 +98,7 @@ function LoginForm() {
         Email ou senha inválidos
       </span>
 
-      <Button type="submit" disabled={disabledButton()}>
+      <Button type="submit" data-testid="btn-login" disabled={disabledButton()}>
         {isLoadingLogin ? (
           <CircleNotch
             size={32}
@@ -106,7 +107,7 @@ function LoginForm() {
             className="animate-spin"
           />
         ) : (
-          <p>ENTRAR</p>
+          "ENTRAR"
         )}
       </Button>
     </FormLoginWrapper>

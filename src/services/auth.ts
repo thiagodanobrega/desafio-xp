@@ -8,7 +8,7 @@ import { ISignInData } from "../contexts/Auth/AuthContext";
 // });
 
 const userTest = {
-  email: "teste@email.com",
+  email: "test@email.com",
   password: "1234567",
 };
 
