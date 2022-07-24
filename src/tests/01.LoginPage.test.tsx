@@ -1,8 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { screen, fireEvent, getByText } from "@testing-library/react";
+import { screen, fireEvent } from "@testing-library/react";
 import React from "react";
 import { describe, expect, test } from "vitest";
 
+import App from "../App";
+import { AssetProvider } from "../contexts/Asset/AssetProvider";
+import * as exports from "../contexts/Auth/AuthProvider";
+import { AuthProvider } from "../contexts/Auth/AuthProvider";
+import { CryptoProvider } from "../contexts/Crypto/CryptoProvider";
 import Login from "../pages/Login";
 import renderWithRouter from "../utils/renderWithRouter";
 
@@ -64,5 +69,30 @@ describe("1 - Testando a tela de login", () => {
       await screen.findByText(/Email ou senha inválidos/i)
     ).toBeInTheDocument();
   });
+
+  test("Verifica se rerireciona para página home e salva token e usuário no localStorage", async () => {
+    renderWithRouter(
+      <AuthProvider>
+        <AssetProvider>
+          <CryptoProvider>
+            <App />
+          </CryptoProvider>
+        </AssetProvider>
+      </AuthProvider>,
+      { route: "/" }
+    );
+    const inputEmail = screen.getByTestId(EMAIL_INPUT_TEST_ID);
+    const inputPassword = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
+    const loginButton = screen.getByTestId(BUTTON_LOGIN_TEST_ID);
+
+    fireEvent.change(inputEmail, { target: { value: "test@email.com" } });
+    fireEvent.change(inputPassword, { target: { value: "1234567" } });
+    fireEvent.click(loginButton);
+    expect(await screen.findByText(/Minhas ações/i)).toBeInTheDocument();
+    const tokenLocalStorage = localStorage.getItem("authToken");
+    const userLocalStorage = localStorage.getItem("user");
+
+    expect(tokenLocalStorage).toBeTruthy();
+    expect(userLocalStorage).toBeTruthy();
+  });
 });
-export {};
