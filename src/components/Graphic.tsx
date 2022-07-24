@@ -12,7 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
-import { cryptoApi } from "../services/cryptoApi";
+import * as api from "../services/cryptoApi";
 
 ChartJS.register(
   CategoryScale,
@@ -31,7 +31,6 @@ interface IGraphic {
 const daysDefualt = [1, 3, 7];
 
 function Graphic({ idCrypto }: IGraphic) {
-  const api = cryptoApi();
   const [historicPrice, setHistoricPrice] = useState<number[][] | undefined>(
     []
   );

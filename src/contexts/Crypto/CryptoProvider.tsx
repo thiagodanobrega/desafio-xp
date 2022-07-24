@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { cryptoApi } from "../../services/cryptoApi";
+import * as api from "../../services/cryptoApi";
 import { CryptoContext, ITrending } from "./CryptoContext";
 
 export function CryptoProvider({ children }: { children: JSX.Element }) {
   const [trendingCoins, setTrendingCoins] = useState<ITrending[] | null>(null);
-  const api = cryptoApi();
 
   const fetchTrendingCoins = async () => {
     const trending = await api.fetchTrendingCoins();

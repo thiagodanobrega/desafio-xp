@@ -11,7 +11,10 @@ export default function Carousel() {
     trendingCoins.map((coin) => {
       const profit = coin?.price_change_percentage_24h >= 0;
       return (
-        <div className="flex flex-col items-center text-white text-sm">
+        <div
+          data-testid="trending-coin"
+          className="flex flex-col items-center text-white text-sm"
+        >
           <img src={coin?.image} alt={coin.name} className="h-8" />
           <span>
             {coin?.symbol}
