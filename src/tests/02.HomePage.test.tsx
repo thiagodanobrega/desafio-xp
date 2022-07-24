@@ -8,6 +8,7 @@ import { AuthProvider } from "../contexts/Auth/AuthProvider";
 import { CryptoProvider } from "../contexts/Crypto/CryptoProvider";
 import { trendingCoins } from "../data/trendingCoins";
 import Home from "../pages/Home";
+import NotFound from "../pages/NotFound";
 import * as apiAsset from "../services/assetApi";
 import * as apiCrypto from "../services/cryptoApi";
 import renderWithRouter from "../utils/renderWithRouter";
@@ -87,5 +88,11 @@ describe("2 - Testando a tela de Home", () => {
 
     const coin = await screen.findAllByTestId("trending-coin");
     expect(coin).toBeTruthy();
+  });
+
+  test("Verifica se redireciona para página de notFound, após passar endereço incorreto", async () => {
+    renderWithRouter(<NotFound />);
+    const title = await screen.findByText(/Voltar para home/i);
+    expect(title).toBeInTheDocument();
   });
 });
