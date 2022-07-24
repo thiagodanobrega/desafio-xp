@@ -20,5 +20,11 @@ describe("1 - Testando a tela de login", () => {
     const title = screen.getByText(/Faça login em sua conta/i);
     expect(title).toBeInTheDocument();
   });
+  test("Verifica se os inputs de email e senha e botão são renderizados'", () => {
+    renderWithRouter(<Login />);
+    expect(screen.getByTestId(EMAIL_INPUT_TEST_ID)).toBeInTheDocument();
+    expect(screen.getByTestId(PASSWORD_INPUT_TEST_ID)).toBeInTheDocument();
+    expect(screen.getByTestId(BUTTON_LOGIN_TEST_ID)).toBeInTheDocument();
+  });
 });
 export {};
