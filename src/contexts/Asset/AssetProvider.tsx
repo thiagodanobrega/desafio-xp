@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { assetApi } from "../../services/assetApi";
+import * as api from "../../services/assetApi";
 import { AuthContext } from "../Auth/AuthContext";
 import { AssetContext, IAllAssets, IUserAssets } from "./AssetContext";
 
@@ -12,7 +12,6 @@ export function AssetProvider({ children }: { children: JSX.Element }) {
   const [refreshPageData, setRefreshPageData] = useState(true);
   const auth = useContext(AuthContext);
   // const { postDeposit, postPurchase, postSell, postWithdraw } = assetApi;
-  const api = assetApi;
   const filteringAvailableAssets = (
     myAssets: IUserAssets[],
     assets: IAllAssets[]
@@ -24,7 +23,7 @@ export function AssetProvider({ children }: { children: JSX.Element }) {
   };
 
   const getAssets = async () => {
-    const myAssets = await api.getMyAssets(auth.user?.id);
+    const myAssets = await api.getUserAssets(auth.user?.id);
     const assets = await api.getAllAssets();
     setUserAssets(myAssets);
     setallAssets(assets);

@@ -22,10 +22,11 @@ function Header() {
           <span>Saldo</span>
         </div>
         <h1 className="text-3xl font-bold">
-          {balance.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          })}
+          {balance &&
+            balance.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
         </h1>
         <AccountModal />
       </div>

@@ -24,7 +24,14 @@ export default function AssetModal({ asset, name, idAsset }: IOpen) {
 
   return (
     <>
-      <ContentOfTable type="button" key={idAsset} onClick={openModal}>
+      <ContentOfTable
+        type="button"
+        key={idAsset}
+        onClick={openModal}
+        data-testid={`${
+          asset.idUser ? `userAsset-${asset.name}` : `asset-${asset.name}`
+        }`}
+      >
         <p className="text-left uppercase">{asset.name}</p>
         <span className="text-center">
           {!asset?.idUser ? 1 : asset.quantity}

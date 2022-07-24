@@ -67,121 +67,126 @@ let myBalance = {
 };
 
 // simulando requisição a api
-export const assetApi = {
-  getAllAssets: async () => {
-    await delay();
-    return allAssets;
-    // const response = await api.get("/assets");
-    // return response.data;
-  },
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getMyAssets: async (userId: any) => {
-    await delay();
-    return myAssets;
-    // const response = await api.get(`/assets/${userId}`);
-    // return response.data;
-  },
+export async function getAllAssets() {
+  await delay();
+  return allAssets;
+  // const response = await api.get("/assets");
+  // return respoexport const assetApi = {nse.data;
+}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getBalance: async (userId: any) => {
-    await delay();
-    return myBalance;
-    // const response = await api.get(`/assets/${userId}`);
-    // return response.data;
-  },
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function getUserAssets(userId: any) {
+  await delay();
+  return myAssets;
+  // const response = await api.get(`/assets/${userId}`);
+  // return response.data;
+}
 
-  postDeposit: async (infosDeposit: { userId: any; value: number }) => {
-    await delay();
-    const newBalance = myBalance.balance + infosDeposit.value;
-    myBalance = { ...myBalance, balance: newBalance };
-    // const response = await api.get(`/assets/${userId}`);
-    // return response.data;
-  },
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function getBalance(userId: any) {
+  await delay();
+  return myBalance;
+  // const response = await api.get(`/assets/${userId}`);
+  // return response.data;
+}
 
-  postWithdraw: async (infosWithdraw: { userId: any; value: number }) => {
-    await delay();
-    const newBalance = myBalance.balance - infosWithdraw.value;
-    myBalance = { ...myBalance, balance: newBalance };
-    // const response = await api.get(`/assets/${userId}`);
-    // return response.data;
-  },
+export async function postDeposit(infosDeposit: {
+  userId: any;
+  value: number;
+}) {
+  await delay();
+  const newBalance = myBalance.balance + infosDeposit.value;
+  myBalance = { ...myBalance, balance: newBalance };
+  // const response = await api.get(`/assets/${userId}`);
+  // return response.data;
+}
 
-  postPurchase: async (infosPurchase: {
-    idAsset: number | undefined;
-    quantity: number;
-    userId: number | undefined;
-  }) => {
-    await delay();
-    allAssets.forEach((asset) => {
-      if (asset.idAsset === infosPurchase.idAsset) {
-        // eslint-disable-next-line no-param-reassign
-        asset.quantity -= infosPurchase.quantity;
-        const purchaseValue = infosPurchase.quantity * asset.value;
-        const newBalance = myBalance.balance - purchaseValue;
-        myBalance = { ...myBalance, balance: newBalance };
-      }
-    });
-    const boolean = myAssets.some(
+export async function postWithdraw(infosWithdraw: {
+  userId: any;
+  value: number;
+}) {
+  await delay();
+  const newBalance = myBalance.balance - infosWithdraw.value;
+  myBalance = { ...myBalance, balance: newBalance };
+  // const response = await api.get(`/assets/${userId}`);
+  // return response.data;
+}
+
+export async function postPurchase(infosPurchase: {
+  idAsset: number | undefined;
+  quantity: number;
+  userId: number | undefined;
+}) {
+  await delay();
+  allAssets.forEach((asset) => {
+    if (asset.idAsset === infosPurchase.idAsset) {
+      // eslint-disable-next-line no-param-reassign
+      asset.quantity -= infosPurchase.quantity;
+      const purchaseValue = infosPurchase.quantity * asset.value;
+      const newBalance = myBalance.balance - purchaseValue;
+      myBalance = { ...myBalance, balance: newBalance };
+    }
+  });
+  const boolean = myAssets.some(
+    (asset) => asset.idAsset === infosPurchase.idAsset
+  );
+
+  if (!boolean) {
+    const asset = allAssets.find(
       (asset) => asset.idAsset === infosPurchase.idAsset
     );
-
-    if (!boolean) {
-      const asset = allAssets.find(
-        (asset) => asset.idAsset === infosPurchase.idAsset
-      );
-      if (asset && infosPurchase.userId && infosPurchase.idAsset) {
-        const newAsset = {
-          idAsset: infosPurchase.idAsset,
-          idUser: 1,
-          name: asset.name,
-          quantity: infosPurchase.quantity,
-          value: 100,
-        };
-        myAssets.push(newAsset);
-      }
-    } else {
-      myAssets.forEach((asset) => {
-        if (asset.idAsset === infosPurchase.idAsset) {
-          // eslint-disable-next-line no-param-reassign
-          asset.quantity += infosPurchase.quantity;
-        }
-      });
+    if (asset && infosPurchase.userId && infosPurchase.idAsset) {
+      const newAsset = {
+        idAsset: infosPurchase.idAsset,
+        idUser: 1,
+        name: asset.name,
+        quantity: infosPurchase.quantity,
+        value: 100,
+      };
+      myAssets.push(newAsset);
     }
-    // const response = await api.get(`/assets/${userId}`);
-    // return response.data;
-  },
-
-  postSell: async (infosPurchase: {
-    idAsset: number | undefined;
-    quantity: number;
-    userId: number | undefined;
-  }) => {
-    await delay();
-
-    allAssets.forEach((asset) => {
+  } else {
+    myAssets.forEach((asset) => {
       if (asset.idAsset === infosPurchase.idAsset) {
         // eslint-disable-next-line no-param-reassign
         asset.quantity += infosPurchase.quantity;
-        const purchaseValue = infosPurchase.quantity * asset.value;
-        const newBalance = myBalance.balance + purchaseValue;
-        myBalance = { ...myBalance, balance: newBalance };
       }
     });
+  }
+  // const response = await api.get(`/assets/${userId}`);
+  // return response.data;
+}
 
-    const asset = myAssets.find(
-      (asset) => asset.idAsset === infosPurchase.idAsset
+export async function postSell(infosPurchase: {
+  idAsset: number | undefined;
+  quantity: number;
+  userId: number | undefined;
+}) {
+  await delay();
+
+  allAssets.forEach((asset) => {
+    if (asset.idAsset === infosPurchase.idAsset) {
+      // eslint-disable-next-line no-param-reassign
+      asset.quantity += infosPurchase.quantity;
+      const purchaseValue = infosPurchase.quantity * asset.value;
+      const newBalance = myBalance.balance + purchaseValue;
+      myBalance = { ...myBalance, balance: newBalance };
+    }
+  });
+
+  const asset = myAssets.find(
+    (asset) => asset.idAsset === infosPurchase.idAsset
+  );
+
+  if (infosPurchase.quantity === asset?.quantity) {
+    myAssets = myAssets.filter(
+      (asset) => asset.idAsset !== infosPurchase.idAsset
     );
-
-    if (infosPurchase.quantity === asset?.quantity) {
-      myAssets = myAssets.filter(
-        (asset) => asset.idAsset !== infosPurchase.idAsset
-      );
-    }
-    if (asset && infosPurchase.quantity < asset?.quantity) {
-      asset.quantity -= infosPurchase.quantity;
-    }
-    // const response = await api.get(`/assets/${userId}`);
-    // return response.data;
-  },
-};
+  }
+  if (asset && infosPurchase.quantity < asset?.quantity) {
+    asset.quantity -= infosPurchase.quantity;
+  }
+  // const response = await api.get(`/assets/${userId}`);
+  // return response.data;
+}

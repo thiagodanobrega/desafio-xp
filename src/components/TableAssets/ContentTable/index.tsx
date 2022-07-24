@@ -11,7 +11,7 @@ function ContentTable({ assets }: IAssetProps) {
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {assets.length ? (
+      {assets && assets.length ? (
         assets.map((asset) => (
           <AssetModal
             asset={asset}

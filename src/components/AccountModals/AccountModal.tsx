@@ -48,10 +48,13 @@ export default function AccountModal() {
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-background p-5 text-left align-middle shadow-xl transition-all">
                   <ModalHeader
                     setIsOppen={setIsOppen}
-                    title={`Saldo: ${balance.toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}`}
+                    title={`Saldo: ${
+                      balance &&
+                      balance.toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      })
+                    }`}
                     transactionSent={transactionSent}
                   />
                   <TransactionModal

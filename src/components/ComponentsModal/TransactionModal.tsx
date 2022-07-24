@@ -5,7 +5,7 @@ import React, { useContext, useState } from "react";
 import { AssetContext } from "../../contexts/Asset/AssetContext";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { CryptoContext } from "../../contexts/Crypto/CryptoContext";
-import { assetApi } from "../../services/assetApi";
+import * as api from "../../services/assetApi";
 import TransactionForm from "../AccountModals/TransactionForm";
 import { Button } from "../Button";
 import Graphic from "../Graphic";
@@ -33,7 +33,6 @@ function TransactionModal({
   const [transactionValue, setTransactionValue] = useState<number>(0);
   const [transactionType, setTransactionType] = useState(typeTransactionOne);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const api = assetApi;
   const {
     balance,
     allAssets,
