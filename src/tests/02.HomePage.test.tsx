@@ -6,8 +6,10 @@ import App from "../App";
 import { AssetProvider } from "../contexts/Asset/AssetProvider";
 import { AuthProvider } from "../contexts/Auth/AuthProvider";
 import { CryptoProvider } from "../contexts/Crypto/CryptoProvider";
+import { trendingCoins } from "../data/trendingCoins";
 import Home from "../pages/Home";
-import * as api from "../services/assetApi";
+import * as apiAsset from "../services/assetApi";
+import * as apiCrypto from "../services/cryptoApi";
 import renderWithRouter from "../utils/renderWithRouter";
 
 describe("2 - Testando a tela de Home", () => {
@@ -30,7 +32,7 @@ describe("2 - Testando a tela de Home", () => {
         value: 100,
       },
     ];
-    vi.spyOn(api, "getUserAssets").mockImplementation(() =>
+    vi.spyOn(apiAsset, "getUserAssets").mockImplementation(() =>
       Promise.resolve(userAsset)
     );
     renderWithRouter(
@@ -52,7 +54,7 @@ describe("2 - Testando a tela de Home", () => {
       id: 1,
       balance: 2000,
     };
-    vi.spyOn(api, "getBalance").mockImplementation(() =>
+    vi.spyOn(apiAsset, "getBalance").mockImplementation(() =>
       Promise.resolve(userBalance)
     );
     renderWithRouter(
@@ -67,5 +69,23 @@ describe("2 - Testando a tela de Home", () => {
 
     const asset = await screen.findByText("R$ 2.000,00");
     expect(asset).toBeInTheDocument();
+  });
+
+  test("Verifica se é renderizado os trending coins", async () => {
+    vi.spyOn(apiCrypto, "fetchTrendingCoins").mockImplementation(() =>
+      Promise.resolve(trendingCoins)
+    );
+    renderWithRouter(
+      <AuthProvider>
+        <AssetProvider>
+          <CryptoProvider>
+            <Home />
+          </CryptoProvider>
+        </AssetProvider>
+      </AuthProvider>
+    );
+
+    const coin = await screen.findAllByTestId("trending-coin");
+    expect(coin).toBeTruthy();
   });
 });
