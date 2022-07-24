@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { screen, fireEvent } from "@testing-library/react";
+import { screen, fireEvent, getByText } from "@testing-library/react";
 import React from "react";
 import { describe, expect, test } from "vitest";
 
@@ -13,6 +13,8 @@ const VALID_EMAIL = "test@email.com";
 const VALID_PASSWORD = "1234567";
 const INVALID_EMAIL = "alguem@email.";
 const INVALID_PASSWORD = "23456";
+const INVALID_EMAIL_2 = "alguem@email.com";
+const INVALID_PASSWORD_2 = "12345678";
 
 describe("1 - Testando a tela de login", () => {
   test("Verifica se possui o título 'Faça login em sua conta'", () => {
@@ -44,9 +46,23 @@ describe("1 - Testando a tela de login", () => {
     fireEvent.change(inputPassword, INVALID_PASSWORD);
     expect(loginButton).toBeDisabled();
 
-    fireEvent.change(inputEmail, { target: { value: "test@email.com" } });
-    fireEvent.change(inputPassword, { target: { value: "1234567" } });
+    fireEvent.change(inputEmail, { target: { value: VALID_EMAIL } });
+    fireEvent.change(inputPassword, { target: { value: VALID_PASSWORD } });
     expect(loginButton).toBeEnabled();
+  });
+
+  test("Verifica se retorna mensagem de erro após degitar email ou senha não cadastrados", async () => {
+    renderWithRouter(<Login />);
+    const inputEmail = screen.getByTestId(EMAIL_INPUT_TEST_ID);
+    const inputPassword = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
+    const loginButton = screen.getByTestId(BUTTON_LOGIN_TEST_ID);
+
+    fireEvent.change(inputEmail, { target: { value: INVALID_EMAIL_2 } });
+    fireEvent.change(inputPassword, { target: { value: INVALID_PASSWORD_2 } });
+    fireEvent.click(loginButton);
+    expect(
+      await screen.findByText(/Email ou senha inválidos/i)
+    ).toBeInTheDocument();
   });
 });
 export {};
