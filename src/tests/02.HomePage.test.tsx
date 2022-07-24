@@ -46,4 +46,26 @@ describe("2 - Testando a tela de Home", () => {
     const asset = await screen.findByTestId("userAsset-ethereum");
     expect(asset).toBeInTheDocument();
   });
+
+  test("Verifica se a página renderiza o saldo do usuário", async () => {
+    const userBalance = {
+      id: 1,
+      balance: 2000,
+    };
+    vi.spyOn(api, "getBalance").mockImplementation(() =>
+      Promise.resolve(userBalance)
+    );
+    renderWithRouter(
+      <AuthProvider>
+        <AssetProvider>
+          <CryptoProvider>
+            <Home />
+          </CryptoProvider>
+        </AssetProvider>
+      </AuthProvider>
+    );
+
+    const asset = await screen.findByText("R$ 2.000,00");
+    expect(asset).toBeInTheDocument();
+  });
 });
