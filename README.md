@@ -7,9 +7,26 @@ Desafio técnico realizado para Front-end no processo seletivo da XP Inc. focado
 A aplicação consiste em uma plataforma de investimento em ações, com algumas funcionalidades de conta digital. 
 O deploy deste projeto foi realizado na Vercel. Acesse aplicacão neste [link.](https://desafio-xp.vercel.app/)
 
+## Versão Mobile
+<p align="center">
+ <img width="200" src="https://github.com/thiagodanobrega/desafio-xp/blob/master/mobile%20(1).png" alt="exemplo imagem" >
+ <img width="200" src="https://github.com/thiagodanobrega/desafio-xp/blob/master/mobile%20(2).png?raw=true" alt="exemplo imagem" >
+ <img width="200" src="https://github.com/thiagodanobrega/desafio-xp/blob/master/mobile%20(3).png?raw=true" alt="exemplo imagem" >
+</p>
 
 ## 🚀 Stack utilizada
 Front-End: React, ContextAPI, TailwindCSS, Styled-Components, Headlessui
+
+## Pontos importantes
+- Densenvolvi a aplicação focada na negociação de criptoativos, aproveitando o momento de lançamento da XTAGE, 
+a plataforma própria da XP para negociação de criptomoedas;
+- Optei por utilizar typescript no desenvolvimento da aplicação pois além de ser uma ferramenta orienta a objetos, 
+possibilita a detecção de erros durante o desenvolvimento;
+- Utilizei o Headlessui para ajudar na construção de componentes acessíveis;
+- Utilizei a react-text-mask para criar mascáras de valor monetário nos input;
+- Para os testes unitários utilizei o Vitest e para gerar relatórios de cobertura utilizei a biblioteca c8;
+- Para o deploy utilizei o Vercel;
+- Para login no site use email: test@email.com e senha: 1234567;
 
 ## ⬇️ Instalando dependências
 
@@ -57,18 +74,23 @@ Compra e venda de ativos:
 - Só é possível comprar ativos caso a quantidade seja menor ou igual a disponível na corretora;
 - Só é possível vender ativos caso a quantidade seja menor ou igual a disponível na carteira;
 
-## Pontos importantes
-- Densenvolvi a aplicação focada na negociação de criptoativos, aproveitando o momento de lançamento da XTAGE, 
-a plataforma própria da XP para negociação de criptomoedas;
-- Optei por utilizar typescript no desenvolvimento da aplicação pois além de ser uma ferramenta orienta a objetos, 
-possibilita a detecção de erros durante o desenvolvimento;
-- Utilizei o Headlessui para ajudar na construção de componentes acessíveis;
-- Utilizei a react-text-mask para criar mascáras de valor monetário nos input;
-- Para os testes unitários utilizei o Vitest e para gerar relatórios de cobertura utilizei a biblioteca c8;
-- Para o deploy utilizei o Vercel;
-
 ## 📝 Melhorias Futuras
 
 - [ ] Realizar o back-end para alimentar o front;
 
+## Versão Web
+
+<p align="center">
+ <img width="600" src="https://github.com/thiagodanobrega/desafio-xp/blob/master/mobile%20(4).png?raw=true" alt="exemplo imagem" >
+</p>
+
+
+<p align="center">
+  <img width="600" src="https://github.com/thiagodanobrega/desafio-xp/blob/master/mobile%20(6).png?raw=true" alt="exemplo imagem" >
+</p>
+
+
+<p align="center">
+  <img width="600" src="https://github.com/thiagodanobrega/desafio-xp/blob/master/mobile%20(5).png?raw=true" alt="exemplo imagem" >
+</p>
 
