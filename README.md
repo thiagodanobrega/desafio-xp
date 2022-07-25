@@ -20,6 +20,7 @@ Front-End: React, ContextAPI, TailwindCSS, Styled-Components, Headlessui
 ## Pontos importantes
 - Densenvolvi a aplicação focada na negociação de criptoativos, aproveitando o momento de lançamento da XTAGE, 
 a plataforma própria da XP para negociação de criptomoedas;
+- Foi utilizado a api da [coingecko](https://www.coingecko.com/en/api/documentation) que fornece o histórico de preços das principais criptomoedas;
 - Optei por utilizar typescript no desenvolvimento da aplicação pois além de ser uma ferramenta orienta a objetos, 
 possibilita a detecção de erros durante o desenvolvimento;
 - Utilizei o Headlessui para ajudar na construção de componentes acessíveis;
